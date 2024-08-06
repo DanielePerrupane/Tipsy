@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalculatorViewController: UIViewController {
+class CalculatorViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var billTextField: UITextField!
     @IBOutlet weak var zeroPctButton: UIButton!
@@ -20,6 +20,12 @@ class CalculatorViewController: UIViewController {
     var numberOfPeople = 2
     var billTotal = 0.0
     var finalResult = "0.0"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        billTextField.keyboardType = .decimalPad
+        billTextField.delegate = self
+    }
     
     @IBAction func tipChanged(_ sender: UIButton) {
         
@@ -75,6 +81,19 @@ class CalculatorViewController: UIViewController {
             
         }
     }
+    
+    //MARK: - TextField Delegate
+    
+    // Sostituisci la virgola con il punto
+    func textField(_ billTextField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == "," {
+            billTextField.text = (billTextField.text as NSString?)?.replacingCharacters(in: range, with: ".")
+            return false
+        }
+        return true
+    }
+    
+    
 }
 
 
