@@ -14,10 +14,17 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var twentyPctButton: UIButton!
     @IBOutlet weak var tenPctButton: UIButton!
     @IBOutlet weak var zeroPctButton: UIButton!
+    @IBOutlet weak var stepper: UIStepper!
     @IBOutlet weak var billtextField: UITextField!
     
     var tip = 0.10
+    var splitNumber = 0.0
+    var textField = ""
 
+    @IBAction func textFieldIsPressed(_ sender: UITextField) {
+        billtextField.text = sender.text
+        textField = sender.text!
+    }
     @IBAction func tipChanged(_ sender: UIButton) {
         
         //Deselect all the button
@@ -35,15 +42,31 @@ class CalculatorViewController: UIViewController {
         //Divide the percent expressed out of 100 into a decimal e.g. 10 becomes 0.1
         tip = buttonTitleAsANumber / 100
         
-        print(tip)
+        billtextField.endEditing(true)
+        
         
         
     }
     
-    @IBAction func stepperValueChanged(_ sender: Any) {
+    @IBAction func stepperValueChanged(_ sender: UIButton) {
+        
+        splitNumberLabel.text = String(format: "%.0f",stepper.value)
+        
+        splitNumber = stepper.value
+        
+        
     }
     
     @IBAction func calculatePressed(_ sender: Any) {
+        
+        let textFieldAsANumber = Double(textField)!
+        
+        let totalPerPerson = (textFieldAsANumber + (textFieldAsANumber * tip)) / splitNumber
+        
+        print(totalPerPerson)
+        
+        
+        
     }
 }
 
